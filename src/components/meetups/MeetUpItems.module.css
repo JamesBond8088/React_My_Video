@@ -8,11 +8,13 @@
   overflow: hidden;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
+  border-top: 5rem solid transparent;
 }
 
 .image img {
   width: 100%;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
 }
 
 .content {
@@ -23,6 +25,22 @@
 .content h3 {
   font-size: 1.25rem;
   color: #2c292b;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }
 
 .actions {

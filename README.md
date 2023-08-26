@@ -1,4 +1,5 @@
 # Getting Started with Create React App
+
 # Video Resource from https://www.youtube.com/watch?v=Dorf8i6lCuk
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -7,13 +8,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run build` & `firebase emulators:start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Follow the host address after firebase prompt
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+### `npm run build` & `firebase deploy`
+
+Deploy to the web: https://react-practice-300a5.web.app
 
 ### `npm test`
 

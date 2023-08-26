@@ -7,7 +7,7 @@ export default function MeetUpItems(props) {
   const favouratesCtx = useContext(FavourateContext);
 
   const itemIsFavourate = favouratesCtx.itemIsFavourate(props.id);
-  function toggleFavourateHandler(){
+  function toggleFavourateHandler() {
     if (itemIsFavourate) {
       favouratesCtx.removeFavourate(props.id);
     } else {
@@ -28,7 +28,7 @@ export default function MeetUpItems(props) {
         </div>
         <div className={classes.content}>
           <h3>{props.title}</h3>
-          <address>{props.address}</address>
+          <a href={props.address}>{props.address}</a>
           <p>{props.description}</p>
         </div>
         <div className={classes.actions}>

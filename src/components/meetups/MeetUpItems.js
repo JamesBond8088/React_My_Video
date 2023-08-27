@@ -20,9 +20,22 @@ export default function MeetUpItems(props) {
       })
     }
   }
+
+  function deleteVideo() {
+    fetch(`https://react-practice-300a5-default-rtdb.firebaseio.com/meetups/${props.id}.json`, { method: 'DELETE' })
+      .then(() => {
+        alert("The video has been deleted.\nRefresh the page to see the change")
+      });
+  }
+
   return (
     <li className={classes.item}>
       <Card>
+        <div className={classes.deleteButton}>
+          <button onClick={deleteVideo}>
+            {"X"}
+          </button>
+        </div>
         <div className={classes.image}>
           <img src={props.image} alt={props.title} />
         </div>

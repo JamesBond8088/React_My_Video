@@ -6,13 +6,20 @@ export default function NewMeetupForm(props) {
   const imageInputRef = useRef();
   const addressInputRef = useRef();
   const descriptionInputRef = useRef();
+
+  const noImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+
   function submitHandler(event) {
     event.preventDefault();
 
     const enteredTitle = titleInputRef.current.value;
     const enteredAddress = addressInputRef.current.value;
-    const enteredImage = imageInputRef.current.value;
+    let enteredImage = imageInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
+
+    if (enteredImage.length === 0) {
+      enteredImage = noImage
+    }
 
     const meetUpInfo = {
       title: enteredTitle,
@@ -32,7 +39,7 @@ export default function NewMeetupForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="Image">Video Image</label>
-          <input type="url" required id="Image" ref={imageInputRef} />
+          <input type="url" placeholder={noImage} id="Image" ref={imageInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="address">Video Link</label>
@@ -40,7 +47,7 @@ export default function NewMeetupForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="Description">Video Description</label>
-          <textarea id="Description" required rows="5" ref={descriptionInputRef} ></textarea>
+          <textarea id="Description" rows="5" ref={descriptionInputRef} ></textarea>
         </div>
         <div className={classes.actions}>
           <button>Add Video</button>

@@ -8,7 +8,7 @@
   overflow: hidden;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
-  border-top: 5rem solid transparent;
+  border-top: 1rem solid transparent;
 }
 
 .image img {
@@ -60,5 +60,25 @@ a:active {
 
 .actions button:hover,
 .actions button:active {
+  background-color: #ffe2ed;
+}
+
+.deleteButton {
+  padding: 1.5rem;
+  text-align: right;
+}
+
+.deleteButton button {
+  font: inherit;
+  cursor: pointer;
+  color: #77002e;
+  border: 1px solid #77002e;
+  background-color: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px;
+}
+
+.deleteButton button:hover,
+.deleteButton button:active {
   background-color: #ffe2ed;
 }

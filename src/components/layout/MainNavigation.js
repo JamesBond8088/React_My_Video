@@ -7,7 +7,9 @@ export default function MainNavigation() {
   const favouratesCtx = useContext(FavourateContext);
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>My Videos</div>
+      <div className={classes.logo}>
+        My Videos
+      </div>
       <nav>
         <ul>
           <li>

@@ -4,6 +4,7 @@ import Card from "../ui/Cards";
 import FavourateContext from "../../store/favourate-context";
 
 export default function MeetUpItems(props) {
+  const urlAddress = "https://" + (props.address)
   const favouratesCtx = useContext(FavourateContext);
 
   const itemIsFavourate = favouratesCtx.itemIsFavourate(props.id);
@@ -31,17 +32,17 @@ export default function MeetUpItems(props) {
   return (
     <li className={classes.item}>
       <Card>
-        <div className={classes.deleteButton}>
+        {/* <div className={classes.deleteButton}>
           <button onClick={deleteVideo}>
             {"X"}
           </button>
-        </div>
+        </div> */}
         <div className={classes.image}>
           <img src={props.image} alt={props.title} />
         </div>
         <div className={classes.content}>
           <h3>{props.title}</h3>
-          <a href={props.address}>{props.address}</a>
+          <a href={urlAddress}>{props.address}</a>
           <p>{props.description}</p>
         </div>
         <div className={classes.actions}>

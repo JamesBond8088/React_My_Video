@@ -6,6 +6,10 @@ import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom"
 import { ref, remove } from "firebase/database";
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 export default function MeetUpItems(props) {
   const urlAddress = "https://" + (props.address)
   const favouratesCtx = useContext(FavourateContext);
@@ -25,14 +29,6 @@ export default function MeetUpItems(props) {
     }
   }
   const navigate = useNavigate();
-  const [buttonClicked, setClicked] = useState(false)
-
-  function clickDeleteButton() {
-    setClicked(true)
-  }
-  function clickCancelButton() {
-    setClicked(false)
-  }
 
   function deleteVideo() {
     remove(ref(db, `videos/${props.id}`)).then(() => {
@@ -40,25 +36,32 @@ export default function MeetUpItems(props) {
     });
   }
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div>
-      {buttonClicked && (
-        <div>
-          <div>
-            Deleting video
-          </div>
-          <button onClick={deleteVideo}>
-            Delete Video
-          </button>
-          <button onClick={clickCancelButton}>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Deleting Video</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You are deleting the video!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
             Cancel
-          </button>
-        </div>
-      )}
+          </Button>
+          <Button variant="danger" onClick={deleteVideo}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <li className={classes.item}>
         <Card>
           <div className={classes.deleteButton}>
-            <button onClick={clickDeleteButton}>
+            <button onClick={handleShow}>
               {"X"}
             </button>
           </div>

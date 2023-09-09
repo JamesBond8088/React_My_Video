@@ -1,31 +1,27 @@
 import { useNavigate } from "react-router-dom"
+import { db } from "../firebase";
+import { ref, child, push, update } from "firebase/database";
+
 
 import NewMeetupForm from "../components/meetups/NewMeetupForm";
 
 function NewMeetupsPage(props) {
   const navigate = useNavigate();
 
-  function addNewMeetupHandler(meetupData) {
-    // fetch(
-    //   "https://react-practice-300a5-default-rtdb.firebaseio.com/meetups.json",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify(meetupData),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // ).then(() => {
-    //   navigate("/");
-    // });
+  function writeUserData(videoData) {
+    // Get a key for a new Post.
+    const newPostKey = push(child(ref(db), 'videos')).key;
 
-    props.addVideo(meetupData)
-    navigate("/");
+    const updates = {};
+    updates[newPostKey] = videoData;
+    update(ref(db, 'videos/'), updates).then(() => {
+      navigate("/");
+    });
   }
   return (
     <section>
       <h1>New video link</h1>
-      <NewMeetupForm addNewMeetup={addNewMeetupHandler} />
+      <NewMeetupForm addNewMeetup={writeUserData} />
     </section>
   );
 }

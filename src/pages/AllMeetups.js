@@ -1,48 +1,45 @@
 import { useState, useEffect } from "react";
 import MeetUpList from "../components/meetups/MeetUpList";
-import { instanceOf } from 'prop-types';
+import { db } from "../firebase";
+import { onValue, ref } from "firebase/database";
 
 function AllMeetupsPage(props) {
   const username = (props.cookies.user.username)
 
   const [isLoading, setIsLoading] = useState(true);
-  const [loadedMeetups, setLoadedMeetups] = useState([]);
+
+  const [hasContent, setHasContent] = useState(true);
+
+  const [loadedVideos, setVideos] = useState([]);
 
   useEffect(() => {
-    // setIsLoading(true);
-    // fetch(
-    //   "https://react-practice-300a5-default-rtdb.firebaseio.com/meetups.json"
-    // )
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     const meetups = [];
+    const query = ref(db, "videos");
+    return onValue(query, (snapshot) => {
+      const data = snapshot.toJSON();
+      console.log("data", data)
 
-    //     for (const key in data) {
-    //       const meetup = {
-    //         id: key,
-    //         ...data[key],
-    //       };
-
-    //       meetups.push(meetup);
-    //     }
-    //     setIsLoading(false);
-    //     setLoadedMeetups(meetups);
-    //   });
-    const videos = (props.cookies.videos)
-    const meetups = []
-    for (const key in videos) {
-      const meetup = {
-        id: key,
-        ...videos[key]
+      if (!data) {
+        setIsLoading(false)
+        setHasContent(false)
       }
-      meetups.push(meetup)
-    }
-    setLoadedMeetups(meetups)
-    setIsLoading(false);
-    console.log(loadedMeetups)
 
+      if (snapshot.exists()) {
+        const videos = [];
+        for (const key in data) {
+          console.log(key)
+          const video = {
+            id: key,
+            ...data[key],
+          };
+
+          videos.push(video);
+        }
+        setIsLoading(false);
+        setVideos(videos)
+      }
+
+
+    });
   }, []);
 
   if (isLoading) {
@@ -53,10 +50,19 @@ function AllMeetupsPage(props) {
     );
   }
 
+  if (!hasContent) {
+    return (
+      <section>
+        <p>No Videos Yet!</p>
+        <p>Add Your First Videos in New Video</p>
+      </section>
+    );
+  }
+
   return (
     <section>
       <h1>All videos for {username}</h1>
-      <MeetUpList meetups={loadedMeetups} />
+      <MeetUpList meetups={loadedVideos} />
     </section>
   );
 }

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "my-videos-2fe69",
     "public": "build",
     "ignore": [
       "firebase.json",
@@ -12,5 +13,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "database": {
+    "rules": "database.rules.json"
   }
 }

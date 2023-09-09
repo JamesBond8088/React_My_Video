@@ -1,7 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import classes from "./MeetUpItems.module.css";
 import Card from "../ui/Cards";
 import FavourateContext from "../../store/favourate-context";
+import { db } from "../../firebase";
+import { useNavigate } from "react-router-dom"
+import { ref, remove } from "firebase/database";
 
 export default function MeetUpItems(props) {
   const urlAddress = "https://" + (props.address)
@@ -21,34 +24,57 @@ export default function MeetUpItems(props) {
       })
     }
   }
+  const navigate = useNavigate();
+  const [buttonClicked, setClicked] = useState(false)
+
+  function clickDeleteButton() {
+    setClicked(true)
+  }
+  function clickCancelButton() {
+    setClicked(false)
+  }
 
   function deleteVideo() {
-    fetch(`https://react-practice-300a5-default-rtdb.firebaseio.com/meetups/${props.id}.json`, { method: 'DELETE' })
-      .then(() => {
-        alert("The video has been deleted.\nRefresh the page to see the change")
-      });
+    remove(ref(db, `videos/${props.id}`)).then(() => {
+      navigate("/");
+    });
   }
 
   return (
-    <li className={classes.item}>
-      <Card>
-        {/* <div className={classes.deleteButton}>
+    <div>
+      {buttonClicked && (
+        <div>
+          <div>
+            Deleting video
+          </div>
           <button onClick={deleteVideo}>
-            {"X"}
+            Delete Video
           </button>
-        </div> */}
-        <div className={classes.image}>
-          <img src={props.image} alt={props.title} />
+          <button onClick={clickCancelButton}>
+            Cancel
+          </button>
         </div>
-        <div className={classes.content}>
-          <h3>{props.title}</h3>
-          <a href={urlAddress}>{props.address}</a>
-          <p>{props.description}</p>
-        </div>
-        <div className={classes.actions}>
-          <button onClick={toggleFavourateHandler}>{itemIsFavourate ? "Remove the Favourate" : "To Favourates"}</button>
-        </div>
-      </Card>
-    </li>
+      )}
+      <li className={classes.item}>
+        <Card>
+          <div className={classes.deleteButton}>
+            <button onClick={clickDeleteButton}>
+              {"X"}
+            </button>
+          </div>
+          <div className={classes.image}>
+            <img src={props.image} alt={props.title} />
+          </div>
+          <div className={classes.content}>
+            <h3>{props.title}</h3>
+            <a href={urlAddress}>{props.address}</a>
+            <p>{props.description}</p>
+          </div>
+          <div className={classes.actions}>
+            <button onClick={toggleFavourateHandler}>{itemIsFavourate ? "Remove the Favourate" : "To Favourates"}</button>
+          </div>
+        </Card>
+      </li>
+    </div>
   );
 }

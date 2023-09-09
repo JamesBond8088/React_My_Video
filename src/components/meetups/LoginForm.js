@@ -11,7 +11,7 @@ export default function LoginForm(props) {
                     <input type="password" placeholder="Password" required onChange={(e) => props.setPassword(e.target.value)} />
                 </div>
                 <div className={classes.form_field}>
-                    <button class={classes.btn} type="submit">Log in</button>
+                    <button className={classes.btn} type="submit">Log in</button>
                 </div>
             </form>
         </div>

@@ -11,7 +11,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 export default function MeetUpItems(props) {
-  const urlAddress = "https://" + (props.address)
+  let urlAddress = (props.address)
+  if (!urlAddress.startsWith('https')) {
+    urlAddress = "https://" + urlAddress
+  }
   const favouratesCtx = useContext(FavourateContext);
 
   const itemIsFavourate = favouratesCtx.itemIsFavourate(props.id);

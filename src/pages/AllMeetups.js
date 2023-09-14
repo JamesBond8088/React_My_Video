@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 
 function AllMeetupsPage(props) {
-  const username = (props.cookies.user.username)
+  const username = props["user"]["username"]
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +16,6 @@ function AllMeetupsPage(props) {
     const query = ref(db, "videos");
     return onValue(query, (snapshot) => {
       const data = snapshot.toJSON();
-      console.log("data", data)
 
       if (!data) {
         setIsLoading(false)
@@ -26,7 +25,6 @@ function AllMeetupsPage(props) {
       if (snapshot.exists()) {
         const videos = [];
         for (const key in data) {
-          console.log(key)
           const video = {
             id: key,
             ...data[key],

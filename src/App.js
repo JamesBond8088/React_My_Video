@@ -40,7 +40,7 @@ function App() {
       {loggedIn ? (
         <Layout>
           <Routes>
-            <Route path="/" element={<AllMeetupsPage user={cookies.user} />}></Route>
+            <Route path="/home" element={<AllMeetupsPage user={cookies.user} />}></Route>
             <Route path="/newMeetup" element={<NewMeetupsPage />}></Route>
             <Route path="/favourates" element={<FavouratesPage />}></Route>
           </Routes>

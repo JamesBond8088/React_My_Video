@@ -35,7 +35,7 @@ export default function MeetUpItems(props) {
 
   function deleteVideo() {
     remove(ref(db, `videos/${props.id}`)).then(() => {
-      navigate("/");
+      navigate("/home");
     });
   }
 
@@ -72,8 +72,7 @@ export default function MeetUpItems(props) {
             <img src={props.image} alt={props.title} />
           </div>
           <div className={classes.content}>
-            <h3>{props.title}</h3>
-            <a href={urlAddress}>{props.address}</a>
+            <a href={urlAddress}>{props.title}</a>
             <p>{props.description}</p>
           </div>
           <div className={classes.actions}>

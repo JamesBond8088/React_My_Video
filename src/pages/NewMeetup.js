@@ -15,7 +15,7 @@ function NewMeetupsPage(props) {
     const updates = {};
     updates[newPostKey] = videoData;
     update(ref(db, 'videos/'), updates).then(() => {
-      navigate("/");
+      navigate("/home");
     });
   }
   return (
@@ -25,5 +25,4 @@ function NewMeetupsPage(props) {
     </section>
   );
 }
-
 export default NewMeetupsPage;

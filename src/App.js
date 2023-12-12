@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { app } from "./firebase"
 
@@ -13,9 +13,11 @@ import { useState } from "react";
 import { CookiesProvider, useCookies } from "react-cookie";
 
 function App() {
+  const navigate = useNavigate();
+
   const [cookies, setCookie] = useCookies(["user"]);
 
-  const [loggedIn, setLogin] = useState(false)
+  const [loggedIn, setLogin] = useState(true)
 
   const auth = getAuth(app);
 
@@ -26,6 +28,7 @@ function App() {
       .then(() => {
         console.log("signed in")
         setLogin(true)
+        navigate("/home");
       })
       .catch((error) => {
         const errorCode = error.code;

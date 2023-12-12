@@ -9,5 +9,4 @@ export default function Layout(props) {
       <Footer />
     </div>
   );
-  // <!-- footer credit to https://epicbootstrap.com/snippets/footer-basic -->
 }

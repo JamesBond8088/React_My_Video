@@ -1,18 +1,20 @@
 import MeetUpItems from "./MeetUpItems";
-import classes from "./MeetUpList.module.css";
+
+
+import Row from 'react-bootstrap/Row';
+
 export default function MeetUpList(props) {
   return (
-    <ul className={classes.list}>
-      {props.meetups.map((meetup) => (
+    <Row xs={2} md={4} className="g-4">
+      {props.videos.map((video) => (
         <MeetUpItems
-          key={meetup.id}
-          id={meetup.id}
-          image={meetup.image}
-          title={meetup.title}
-          address={meetup.address}
-          description={meetup.description}
+          id={video.id}
+          image={video.image}
+          title={video.title}
+          url={video.address}
+          description={video.description}
         />
       ))}
-    </ul>
+    </Row>
   );
 }

@@ -58,10 +58,10 @@ function AllMeetupsPage(props) {
   }
 
   return (
-    <section>
+    <div>
       <h1>All videos for {username}</h1>
-      <MeetUpList meetups={loadedVideos} />
-    </section>
+      < MeetUpList videos={loadedVideos} />
+    </div>
   );
 }
 

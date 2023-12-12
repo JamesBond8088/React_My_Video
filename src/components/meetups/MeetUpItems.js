@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import classes from "./MeetUpItems.module.css";
-import Card from "../ui/Cards";
 import FavourateContext from "../../store/favourate-context";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom"
@@ -9,9 +8,10 @@ import { ref, remove } from "firebase/database";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
 
 export default function MeetUpItems(props) {
-  let urlAddress = (props.address)
+  let urlAddress = (props.url)
   if (!urlAddress.startsWith('https')) {
     urlAddress = "https://" + urlAddress
   }
@@ -61,25 +61,16 @@ export default function MeetUpItems(props) {
         </Modal.Footer>
       </Modal>
 
-      <li className={classes.item}>
-        <Card>
-          <div className={classes.deleteButton}>
-            <button onClick={handleShow}>
-              {"X"}
-            </button>
-          </div>
-          <div className={classes.image}>
-            <img src={props.image} alt={props.title} />
-          </div>
-          <div className={classes.content}>
-            <a href={urlAddress}>{props.title}</a>
-            <p>{props.description}</p>
-          </div>
-          <div className={classes.actions}>
-            <button onClick={toggleFavourateHandler}>{itemIsFavourate ? "Remove the Favourate" : "To Favourates"}</button>
-          </div>
-        </Card>
-      </li>
+      <Card>
+        <a href={props.url}><Card.Img variant="top" src={props.image} /></a>
+        <Card.Body>
+          <Card.Title>{props.title}</Card.Title>
+          <Card.Text>
+            {props.description}
+          </Card.Text>
+        </Card.Body>
+        <Button variant="link" onClick={handleShow}>Delete</Button>{' '}
+      </Card>
     </div>
   );
 }

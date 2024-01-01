@@ -1,6 +1,4 @@
-import { useContext, useState } from "react";
-import classes from "./MeetUpItems.module.css";
-import FavourateContext from "../../store/favourate-context";
+import { useState } from "react";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom"
 import { ref, remove } from "firebase/database";
@@ -15,25 +13,14 @@ export default function MeetUpItems(props) {
   if (!urlAddress.startsWith('https')) {
     urlAddress = "https://" + urlAddress
   }
-  const favouratesCtx = useContext(FavourateContext);
 
-  const itemIsFavourate = favouratesCtx.itemIsFavourate(props.id);
-  function toggleFavourateHandler() {
-    if (itemIsFavourate) {
-      favouratesCtx.removeFavourate(props.id);
-    } else {
-      favouratesCtx.addFavourate({
-        id: props.id,
-        image: props.image,
-        address: props.address,
-        description: props.description,
-        title: props.title
-      })
-    }
-  }
   const navigate = useNavigate();
 
   function deleteVideo() {
+    // close the modal after delete
+    handleClose()
+
+    // remove from the database
     remove(ref(db, `videos/${props.id}`)).then(() => {
       navigate("/home");
     });
@@ -64,7 +51,7 @@ export default function MeetUpItems(props) {
       <Card>
         <a href={props.url}><Card.Img variant="top" src={props.image} /></a>
         <Card.Body>
-          <Card.Title>{props.title}</Card.Title>
+          <a className="link-dark" href={props.url}><Card.Title>{props.title}</Card.Title></a>
           <Card.Text>
             {props.description}
           </Card.Text>

@@ -37,12 +37,12 @@ export default function MainNavigation() {
 
     const url = video_url.current.value;
     if (url === "") {
-      alert("Empty Url")
+      alert("Empty URL")
       return
     }
     const meetUpInfo = {
       title: url,
-      image: noImage,
+      image: '',
       address: url,
       description: "Testing",
     }
@@ -58,10 +58,6 @@ export default function MainNavigation() {
           <Nav className="me-auto">
             <Nav.Link> <Link to="/home" color="white">All Videos</Link> </Nav.Link>
             <Nav.Link> <Link to="/newMeetup" background="yellow">New Video</Link> </Nav.Link>
-            <Nav.Link>
-              <Link to="/favourates">Favourates<span className={classes.badge}>{favouratesCtx.totalFavourates}</span>
-              </Link>
-            </Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={submitHandle}>
             <Form.Control

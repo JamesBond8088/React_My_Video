@@ -7,7 +7,7 @@ export default function NewMeetupForm(props) {
   const addressInputRef = useRef();
   const descriptionInputRef = useRef();
 
-  const noImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+  // const noImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
 
   function submitHandler(event) {
     event.preventDefault();
@@ -18,7 +18,7 @@ export default function NewMeetupForm(props) {
     const enteredDescription = descriptionInputRef.current.value;
 
     if (enteredImage.length === 0) {
-      enteredImage = noImage
+      enteredImage = ''
     }
 
     const meetUpInfo = {

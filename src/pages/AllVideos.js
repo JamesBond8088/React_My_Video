@@ -3,7 +3,7 @@ import MeetUpList from "../components/meetups/MeetUpList";
 import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 
-function AllMeetupsPage(props) {
+export default function AllVideosPage(props) {
   const username = props["user"]["username"]
 
   const [isLoading, setIsLoading] = useState(true);
@@ -64,5 +64,3 @@ function AllMeetupsPage(props) {
     </div>
   );
 }
-
-export default AllMeetupsPage;

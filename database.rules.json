@@ -1,13 +1,5 @@
-// {
-//   "rules": {
-//     ".read": "now < 1695391200000",  // 2023-9-23
-//     ".write": "now < 1695391200000",  // 2023-9-23
-//   }
-// }
 {
   "rules": {
-    // ".read": true,
-    // ".write": true
     ".read": true,
     ".write": "auth.uid !== null",
   }

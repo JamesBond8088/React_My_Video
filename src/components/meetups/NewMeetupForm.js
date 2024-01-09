@@ -39,7 +39,7 @@ export default function NewMeetupForm(props) {
         </div>
         <div className={classes.control}>
           <label htmlFor="Image">Video Image</label>
-          <input type="url" placeholder="image" id="Image" ref={imageInputRef} />
+          <input type="url" id="Image" ref={imageInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="address">Video Link</label>

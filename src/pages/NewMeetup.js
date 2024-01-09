@@ -6,15 +6,17 @@ import { ref, child, push, update } from "firebase/database";
 import NewMeetupForm from "../components/meetups/NewMeetupForm";
 
 function NewMeetupsPage(props) {
+  const username = props["user"]["username"]
+
   const navigate = useNavigate();
 
   function writeUserData(videoData) {
-    // Get a key for a new Post.
-    const newPostKey = push(child(ref(db), 'videos')).key;
+    const videoLocation = "videos/" + username + "/"
+    const newPostKey = push(child(ref(db), videoLocation)).key;
 
     const updates = {};
     updates[newPostKey] = videoData;
-    update(ref(db, 'videos/'), updates).then(() => {
+    update(ref(db, videoLocation), updates).then(() => {
       navigate("/home");
     });
   }

@@ -10,6 +10,7 @@ import Card from 'react-bootstrap/Card';
 
 export default function MeetUpItems(props) {
   let urlAddress = (props.url)
+  const username = props.username
   if (!urlAddress.startsWith('https')) {
     urlAddress = "https://" + urlAddress
   }
@@ -21,7 +22,7 @@ export default function MeetUpItems(props) {
     handleClose()
 
     // remove from the database
-    remove(ref(db, `videos/${props.id}`)).then(() => {
+    remove(ref(db, `videos/${username}/${props.id}`)).then(() => {
       navigate("/home");
     });
   }
@@ -49,9 +50,9 @@ export default function MeetUpItems(props) {
       </Modal>
 
       <Card>
-        <a href={props.url}><Card.Img variant="top" src={props.image} /></a>
+        <a href={urlAddress}><Card.Img variant="top" src={props.image} /></a>
         <Card.Body>
-          <a className="link-dark" href={props.url}><Card.Title>{props.title}</Card.Title></a>
+          <a className="link-dark" href={urlAddress}><Card.Title>{props.title}</Card.Title></a>
           <Card.Text>
             {props.description}
           </Card.Text>

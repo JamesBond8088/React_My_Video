@@ -80,14 +80,12 @@ function App() {
     get(query)
       .then((snapshot) => {
         const data = snapshot.toJSON()
-        console.log(data)
         if (!(username in data)) {
           alert("username and password incorrect")
         }
         else {
           const accountPassword = data[username]
           var passwordSHA256 = new Hashes.SHA256().b64(password)
-          console.log("Sha256 ", passwordSHA256)
           if (accountPassword !== passwordSHA256) {
             alert("username and password incorrect")
           }
@@ -99,14 +97,18 @@ function App() {
       });
   }
 
+  const [videoSearch, setVideoSearch] = useState("")
+  function onSearch(videoSearch) {
+    setVideoSearch(videoSearch)
+  }
+
   return (
     <CookiesProvider>
       {loggedIn ? (
-        <Layout>
+        <Layout search={onSearch}>
           <Routes>
-            <Route path="/home" element={<AllVideosPage user={cookies.user} />}></Route>
-            <Route path="/newMeetup" element={<NewMeetupsPage />}></Route>
-            {/* <Route path="/favourates" element={<FavouratesPage />}></Route> */}
+            <Route path="/home" element={<AllVideosPage user={cookies.user} videoSearch={videoSearch} />}></Route>
+            <Route path="/newMeetup" element={<NewMeetupsPage user={cookies.user} />}></Route>
           </Routes>
         </Layout>
       ) : (

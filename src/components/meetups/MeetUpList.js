@@ -1,6 +1,4 @@
 import MeetUpItems from "./MeetUpItems";
-
-
 import Row from 'react-bootstrap/Row';
 
 export default function MeetUpList(props) {
@@ -13,6 +11,7 @@ export default function MeetUpList(props) {
           title={video.title}
           url={video.address}
           description={video.description}
+          username={props.username}
         />
       ))}
     </Row>

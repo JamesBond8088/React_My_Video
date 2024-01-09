@@ -12,8 +12,11 @@ export default function AllVideosPage(props) {
 
   const [loadedVideos, setVideos] = useState([]);
 
+  const videoSearch = props.videoSearch;
+
   useEffect(() => {
-    const query = ref(db, "videos");
+    const videoLocation = "videos/" + username + "/";
+    const query = ref(db, videoLocation);
     return onValue(query, (snapshot) => {
       const data = snapshot.toJSON();
 
@@ -22,7 +25,7 @@ export default function AllVideosPage(props) {
         setHasContent(false)
       }
 
-      if (snapshot.exists()) {
+      if (snapshot.exists() && videoSearch === "") {
         const videos = [];
         for (const key in data) {
           const video = {
@@ -35,10 +38,23 @@ export default function AllVideosPage(props) {
         setIsLoading(false);
         setVideos(videos)
       }
+      else if (snapshot.exists()) {
+        const videos = [];
+        for (const key in data) {
+          if (data[key]["title"].includes(videoSearch) || data[key]["address"].includes(videoSearch)) {
+            const video = {
+              id: key,
+              ...data[key],
+            };
 
-
+            videos.push(video);
+          }
+        }
+        setIsLoading(false);
+        setVideos(videos)
+      }
     });
-  }, []);
+  }, [username, videoSearch]);
 
   if (isLoading) {
     return (
@@ -60,7 +76,7 @@ export default function AllVideosPage(props) {
   return (
     <div>
       <h1>All videos for {username}</h1>
-      < MeetUpList videos={loadedVideos} />
+      < MeetUpList videos={loadedVideos} username={username} />
     </div>
   );
 }

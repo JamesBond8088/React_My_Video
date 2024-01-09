@@ -4,7 +4,7 @@ import Footer from "./Footer"
 export default function Layout(props) {
   return (
     <div>
-      <MainNavigation />
+      <MainNavigation search={props.search} />
       <main className={classes.main}>{props.children}</main>
       <Footer />
     </div>

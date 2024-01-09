@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 
-export default function MeetUpItems(props) {
+export default function VideoItems(props) {
   let urlAddress = (props.url)
   const username = props.username
   if (!urlAddress.startsWith('https')) {

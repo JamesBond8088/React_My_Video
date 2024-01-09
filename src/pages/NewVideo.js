@@ -2,10 +2,9 @@ import { useNavigate } from "react-router-dom"
 import { db } from "../firebase";
 import { ref, child, push, update } from "firebase/database";
 
+import NewVideoForm from "../components/videos/NewVideoForm";
 
-import NewMeetupForm from "../components/meetups/NewMeetupForm";
-
-function NewMeetupsPage(props) {
+export default function NewVideosPage(props) {
   const username = props["user"]["username"]
 
   const navigate = useNavigate();
@@ -23,8 +22,7 @@ function NewMeetupsPage(props) {
   return (
     <section>
       <h1>New video link</h1>
-      <NewMeetupForm addNewMeetup={writeUserData} />
+      <NewVideoForm addNewVideo={writeUserData} />
     </section>
   );
 }
-export default NewMeetupsPage;

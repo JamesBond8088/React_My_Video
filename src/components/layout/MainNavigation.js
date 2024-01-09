@@ -18,6 +18,11 @@ export default function MainNavigation(props) {
     props.search(videoSearch);
   }
 
+  // clear the search value when refreshing the home page
+  function showAllVideos() {
+    props.search("")
+  }
+
   return (
     <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="bg-body-tertiary">
       <Container>
@@ -25,8 +30,8 @@ export default function MainNavigation(props) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link> <Link to="/home" color="white">All Videos</Link> </Nav.Link>
-            <Nav.Link> <Link to="/newMeetup" background="yellow">New Video</Link> </Nav.Link>
+            <Nav.Link> <Link to="/home" color="white" onClick={showAllVideos}>All Videos</Link> </Nav.Link>
+            <Nav.Link> <Link to="/newVideo" background="yellow">New Video</Link> </Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={submitHandle}>
             <Form.Control

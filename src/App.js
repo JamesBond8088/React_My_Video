@@ -4,15 +4,15 @@ import { app, db } from "./firebase"
 import { ref, update, get } from "firebase/database";
 
 import AllVideosPage from "./pages/AllVideos";
-import NewMeetupsPage from "./pages/NewMeetup";
 import LoginForm from "./pages/LoginForm";
 
 import Layout from "./components/layout/Layout";
 import { useState } from "react";
 
 import { CookiesProvider, useCookies } from "react-cookie";
+import NewVideosPage from "./pages/NewVideo";
 
-function App() {
+export default function App() {
   const navigate = useNavigate();
 
   const Hashes = require('jshashes')
@@ -91,6 +91,7 @@ function App() {
           }
           else {
             setCookie("user", userInfo, { path: "/" });
+            navigate("/home");
             setLogin(true)
           }
         }
@@ -108,7 +109,7 @@ function App() {
         <Layout search={onSearch}>
           <Routes>
             <Route path="/home" element={<AllVideosPage user={cookies.user} videoSearch={videoSearch} />}></Route>
-            <Route path="/newMeetup" element={<NewMeetupsPage user={cookies.user} />}></Route>
+            <Route path="/newVideo" element={<NewVideosPage user={cookies.user} />}></Route>
           </Routes>
         </Layout>
       ) : (
@@ -117,5 +118,3 @@ function App() {
     </CookiesProvider>
   );
 }
-
-export default App;

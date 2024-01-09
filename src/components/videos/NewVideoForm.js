@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import classes from "./NewMeetupForm.module.css";
+import classes from "./NewVideoForm.module.css";
 import Card from "../ui/Cards";
-export default function NewMeetupForm(props) {
+export default function NewVideoForm(props) {
   const titleInputRef = useRef();
   const imageInputRef = useRef();
   const addressInputRef = useRef();
@@ -21,14 +21,14 @@ export default function NewMeetupForm(props) {
       enteredImage = ''
     }
 
-    const meetUpInfo = {
+    const videoInfo = {
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
       description: enteredDescription,
     }
 
-    props.addNewMeetup(meetUpInfo);
+    props.addNewVideo(videoInfo);
   }
   return (
     <Card>

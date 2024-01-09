@@ -1,11 +1,11 @@
-import MeetUpItems from "./MeetUpItems";
+import VideoItems from "./VideoItems";
 import Row from 'react-bootstrap/Row';
 
-export default function MeetUpList(props) {
+export default function VideoList(props) {
   return (
     <Row xs={2} md={4} className="g-4">
       {props.videos.map((video) => (
-        <MeetUpItems
+        <VideoItems
           id={video.id}
           image={video.image}
           title={video.title}

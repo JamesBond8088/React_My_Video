@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import MeetUpList from "../components/meetups/MeetUpList";
+import VideoList from "../components/videos/VideoList";
 import { db } from "../firebase";
 import { onValue, ref } from "firebase/database";
 
@@ -76,7 +76,7 @@ export default function AllVideosPage(props) {
   return (
     <div>
       <h1>All videos for {username}</h1>
-      < MeetUpList videos={loadedVideos} username={username} />
+      < VideoList videos={loadedVideos} username={username} />
     </div>
   );
 }

@@ -14,6 +14,7 @@ export default function AllVideosPage(props) {
 
   const videoSearch = props.videoSearch;
 
+  // GET the videos from database
   useEffect(() => {
     const videoLocation = "videos/" + username + "/";
     const query = ref(db, videoLocation);
@@ -42,6 +43,7 @@ export default function AllVideosPage(props) {
         const videos = [];
         for (const key in data) {
           if (data[key]["title"].includes(videoSearch) || data[key]["address"].includes(videoSearch)) {
+            // search if key word is in title or address
             const video = {
               id: key,
               ...data[key],

@@ -50,9 +50,9 @@ export default function VideoItems(props) {
       </Modal>
 
       <Card>
-        <a href={urlAddress}><Card.Img variant="top" src={props.image} /></a>
+        <a href={urlAddress} rel="noreferrer" target="_blank"><Card.Img variant="top" rel="noreferrer" src={props.image} /></a>
         <Card.Body>
-          <a className="link-dark" href={urlAddress}><Card.Title>{props.title}</Card.Title></a>
+          <a className="link-dark" href={urlAddress} rel="noreferrer" target="_blank"><Card.Title>{props.title}</Card.Title></a>
           <Card.Text>
             {props.description}
           </Card.Text>

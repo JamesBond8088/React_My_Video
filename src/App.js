@@ -11,6 +11,7 @@ import { useState } from "react";
 
 import { CookiesProvider, useCookies } from "react-cookie";
 import NewVideosPage from "./pages/NewVideo";
+import OthersVideoPage from "./pages/OthersVideo";
 
 export default function App() {
   const navigate = useNavigate();
@@ -110,6 +111,7 @@ export default function App() {
           <Routes>
             <Route path="/home" element={<AllVideosPage user={cookies.user} videoSearch={videoSearch} />}></Route>
             <Route path="/newVideo" element={<NewVideosPage user={cookies.user} />}></Route>
+            <Route path="/othersVideo" element={<OthersVideoPage user={cookies.user} />}></Route>
           </Routes>
         </Layout>
       ) : (

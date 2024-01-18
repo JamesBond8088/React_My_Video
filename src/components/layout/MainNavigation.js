@@ -31,7 +31,8 @@ export default function MainNavigation(props) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link> <Link to="/home" color="white" onClick={showAllVideos}>All Videos</Link> </Nav.Link>
-            <Nav.Link> <Link to="/newVideo" background="yellow">New Video</Link> </Nav.Link>
+            <Nav.Link> <Link to="/newVideo">New Video</Link> </Nav.Link>
+            <Nav.Link> <Link to="/othersVideo">Others Video</Link> </Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={submitHandle}>
             <Form.Control

@@ -11,7 +11,7 @@ import Card from 'react-bootstrap/Card';
 export default function VideoItems(props) {
   let urlAddress = (props.url)
   const username = props.username
-  if (!urlAddress.startsWith('https')) {
+  if (!urlAddress.startsWith('http')) {
     urlAddress = "https://" + urlAddress
   }
 

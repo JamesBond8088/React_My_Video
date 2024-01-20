@@ -7,13 +7,14 @@ import AllVideosPage from "./pages/AllVideos";
 import LoginForm from "./pages/LoginForm";
 
 import Layout from "./components/layout/Layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { CookiesProvider, useCookies } from "react-cookie";
 import NewVideosPage from "./pages/NewVideo";
 import OthersVideoPage from "./pages/OthersVideo";
 
 export default function App() {
+
   const navigate = useNavigate();
 
   const Hashes = require('jshashes')
@@ -23,6 +24,14 @@ export default function App() {
   const [loggedIn, setLogin] = useState(false)
 
   const auth = getAuth(app);
+
+  // persistant login, check if user cookie exist when page loads
+  useEffect(() => {
+    const loggedInUser = document.cookie
+    if (loggedInUser.startsWith("user=")) {
+      setLogin(true)
+    }
+  }, []);
 
   // if sign up has no error, store the user information
   function SignUpSuccess(userInfo) {
@@ -51,6 +60,7 @@ export default function App() {
       });
   }
 
+  // user sign up
   function handleSignUp(userInfo) {
     const username = userInfo["username"]
 
@@ -73,6 +83,7 @@ export default function App() {
       });
   }
 
+  // user login
   function handleLogin(userInfo) {
     const username = userInfo["username"]
     const password = userInfo["password"]
@@ -92,13 +103,14 @@ export default function App() {
           }
           else {
             setCookie("user", userInfo, { path: "/" });
-            navigate("/home");
             setLogin(true)
+            navigate("/home");
           }
         }
       });
   }
 
+  // passing the video search keys
   const [videoSearch, setVideoSearch] = useState("")
   function onSearch(videoSearch) {
     setVideoSearch(videoSearch)

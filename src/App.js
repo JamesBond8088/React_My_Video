@@ -110,6 +110,10 @@ export default function App() {
       });
   }
 
+  function handleLogout() {
+    setLogin(false)
+  }
+
   // passing the video search keys
   const [videoSearch, setVideoSearch] = useState("")
   function onSearch(videoSearch) {
@@ -119,7 +123,7 @@ export default function App() {
   return (
     <CookiesProvider>
       {loggedIn ? (
-        <Layout search={onSearch}>
+        <Layout search={onSearch} handleLogout={handleLogout}>
           <Routes>
             <Route path="/home" element={<AllVideosPage user={cookies.user} videoSearch={videoSearch} />}></Route>
             <Route path="/newVideo" element={<NewVideosPage user={cookies.user} />}></Route>

@@ -45,6 +45,7 @@ export default function MainNavigation(props) {
             <Button variant="outline-success" type="submit">Search</Button>
           </Form>
         </Navbar.Collapse>
+        <Button variant="outline-primary" onClick={props.handleLogout}>Logout</Button>
       </Container>
     </Navbar>
   );

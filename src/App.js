@@ -27,18 +27,42 @@ export default function App() {
 
   // persistant login, check if user cookie exist when page loads
   useEffect(() => {
-    const loggedInUser = document.cookie
-    if (loggedInUser.startsWith("user=")) {
+
+    const webCookie = document.cookie;
+    if (webCookie.includes("username") && webCookie.includes("password")) {
       setLogin(true)
     }
+
+    // if (cookies.user) {
+    //   // security for cookie checking, disabled for efficiency
+
+    //   // const username = cookies.user["username"]
+    //   // const password = cookies.user["password"]
+    //   // const query = ref(db, "accounts")
+
+    //   // get(query)
+    //   //   .then((snapshot) => {
+    //   //     const data = snapshot.toJSON()
+    //   //     if (!(username in data)) {
+    //   //       alert("something went wrong")
+    //   //     }
+    //   //     else {
+    //   //       const accountPassword = data[username]
+    //   //       if (accountPassword !== password) {
+    //   //         alert("something went wrong")
+    //   //       }
+    //   //       else {
+    //   //         setLogin(true)
+    //   //       }
+    //   //     }
+    //   //   });
+    // }
   }, []);
 
   // if sign up has no error, store the user information
   function SignUpSuccess(userInfo) {
     const username = userInfo["username"]
     const password = userInfo["password"]
-
-    setCookie("user", userInfo, { path: "/" });
 
     signInAnonymously(auth)
       .then(() => {
@@ -50,6 +74,12 @@ export default function App() {
           navigate("/home");
         });
 
+        // set cookie value
+        const cookieValue = {
+          username: username,
+          password: passwordSHA256
+        }
+        setCookie("user", cookieValue, { path: "/" });
         setLogin(true)
       })
       .catch((error) => {
@@ -102,7 +132,12 @@ export default function App() {
             alert("username and password incorrect")
           }
           else {
-            setCookie("user", userInfo, { path: "/" });
+            // set cookie value
+            const cookieValue = {
+              username: username,
+              password: passwordSHA256
+            }
+            setCookie("user", cookieValue, { path: "/" });
             setLogin(true)
             navigate("/home");
           }
@@ -111,6 +146,7 @@ export default function App() {
   }
 
   function handleLogout() {
+    setCookie("user", "", { path: "/" })
     setLogin(false)
   }
 

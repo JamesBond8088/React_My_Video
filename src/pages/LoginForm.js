@@ -60,6 +60,7 @@ export default function LoginForm(props) {
                         <div className={classes.form_field}>
                             <input type="password" placeholder="Repeat Password" required ref={repeated_passwordRef} />
                         </div>
+                        <p>* By signing up I agree to the terms and conditions of the app and all rights reserved to the owner</p>
                         <div className={classes.form_field}>
                             <button className={classes.loginbtn} type="submit">Sign up</button>
                             <button className={classes.signupbtn} onClick={loginPage}>Log in</button>

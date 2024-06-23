@@ -1,23 +1,6 @@
 import { useRef } from "react";
 import classes from "./NewVideoForm.module.css";
 import Card from "../ui/Cards";
-// import { Puppeteer } from "puppeteer-core";
-
-// async function scrapeImages(url) {
-//   const browser = await Puppeteer.launch();
-//   const page = await browser.newPage();
-//   await page.goto(url);
-
-//   const imageUrls = await page.evaluate(() => {
-//     const images = document.querySelectorAll("img");
-//     const urls = Array.from(images).map((img) => img.src);
-//     console.log(urls);
-//     return urls;
-//   });
-
-//   await browser.close();
-//   return imageUrls;
-// }
 
 export default function NewVideoForm(props) {
   const titleInputRef = useRef();
@@ -37,8 +20,6 @@ export default function NewVideoForm(props) {
       enteredImage = "";
     }
 
-    // scrapeImages("https://en.wikipedia.org/wiki/Bubble_sort");
-
     const videoInfo = {
       title: enteredTitle,
       image: enteredImage,
@@ -46,7 +27,7 @@ export default function NewVideoForm(props) {
       description: enteredDescription,
     };
 
-    // props.addNewVideo(videoInfo);
+    props.addNewVideo(videoInfo);
   }
   return (
     <Card>

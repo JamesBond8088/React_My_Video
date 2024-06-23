@@ -9,6 +9,7 @@ export default function VideoList(props) {
           key={video.id}
           id={video.id}
           image={video.image}
+          imagePath={video.imagePath}
           title={video.title}
           urlAddress={video.address}
           description={video.description}

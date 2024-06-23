@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { ref, remove, set } from "firebase/database";
+import { ref as databaseRef, remove, set } from "firebase/database";
 import {
   getStorage,
   ref as storageRef,
   getDownloadURL,
   uploadBytes,
+  deleteObject,
 } from "firebase/storage";
 
 import Button from "react-bootstrap/Button";
@@ -61,7 +62,7 @@ export default function VideoItems(props) {
 
   const deleteVideo = () => {
     // remove from the database
-    remove(ref(db, `videos/${username}/${props.id}`)).then(() => {
+    remove(databaseRef(db, `videos/${username}/${props.id}`)).then(() => {
       handleDeleteClose();
       navigate("/home");
     });
@@ -75,15 +76,32 @@ export default function VideoItems(props) {
     const description = descriptionRef.current.querySelector("textarea").value;
 
     let imagePath = null;
+    const storage = getStorage();
+
+    if (imageFile === undefined && image.length === 0) {
+      imagePath = props.imagePath;
+    } else if (props.imagePath !== undefined) {
+      // delete previous image if exist
+      try {
+        const desertRef = storageRef(storage, props.imagePath);
+        await deleteObject(desertRef);
+      } catch (err) {
+        console.log("deleting video error:", err);
+      }
+    }
+
     // if image url is empty, check for file
     if (imageFile !== undefined) {
       setIsLoading(true);
-      const storage = getStorage();
+      // upload new image
       imagePath = `images/${props.username}/${imageFile.name}`;
       const storagePath = storageRef(storage, imagePath);
-      // wait for file upload to finish
-      await uploadBytes(storagePath, imageFile);
-      setIsLoading(false);
+      try {
+        await uploadBytes(storagePath, imageFile);
+        setIsLoading(false);
+      } catch (err) {
+        console.log("updating video error:", err);
+      }
     }
 
     const postData = {
@@ -94,10 +112,12 @@ export default function VideoItems(props) {
       description,
     };
 
-    set(ref(db, `videos/${username}/${props.id}`), postData).then(() => {
-      handleEditClose();
-      navigate("/home");
-    });
+    set(databaseRef(db, `videos/${username}/${props.id}`), postData).then(
+      () => {
+        handleEditClose();
+        navigate("/home");
+      }
+    );
   };
 
   const [showDelete, setShowDelete] = useState(false);

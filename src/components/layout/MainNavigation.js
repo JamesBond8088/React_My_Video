@@ -2,11 +2,11 @@ import { useRef } from "react";
 
 import { Link } from "react-router-dom";
 
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 export default function MainNavigation(props) {
   const video_url = useRef();
@@ -20,19 +20,45 @@ export default function MainNavigation(props) {
 
   // clear the search value when refreshing the home page
   function showAllVideos() {
-    props.search("")
+    props.search("");
   }
 
   return (
-    <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="bg-body-tertiary">
+    <Navbar
+      expand="lg"
+      bg="dark"
+      data-bs-theme="dark"
+      className="bg-body-tertiary"
+    >
       <Container>
         <Navbar.Brand>My Videos</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link> <Link to="/home" color="white" onClick={showAllVideos}>All Videos</Link> </Nav.Link>
-            <Nav.Link> <Link to="/newVideo">New Video</Link> </Nav.Link>
-            <Nav.Link> <Link to="/othersVideo">Others Video</Link> </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/home"
+              color="white"
+              onClick={showAllVideos}
+            >
+              All Videos
+            </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/newVideo"
+              color="white"
+              onClick={showAllVideos}
+            >
+              New Video
+            </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/othersVideo"
+              color="white"
+              onClick={showAllVideos}
+            >
+              Others Video
+            </Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={submitHandle}>
             <Form.Control
@@ -42,10 +68,14 @@ export default function MainNavigation(props) {
               aria-label="Search"
               ref={video_url}
             />
-            <Button variant="outline-success" type="submit">Search</Button>
+            <Button variant="outline-success" type="submit">
+              Search
+            </Button>
           </Form>
         </Navbar.Collapse>
-        <Button variant="outline-primary" onClick={props.handleLogout}>Logout</Button>
+        <Button variant="outline-primary" onClick={props.handleLogout}>
+          Logout
+        </Button>
       </Container>
     </Navbar>
   );

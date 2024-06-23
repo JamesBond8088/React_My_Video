@@ -81,6 +81,7 @@ export default function App() {
         }
         setCookie("user", cookieValue, { path: "/" });
         setLogin(true)
+        console.log("user logged in")
       })
       .catch((error) => {
         const errorCode = error.code;

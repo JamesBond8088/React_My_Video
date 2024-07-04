@@ -1,14 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { ref as databaseRef, remove, set } from "firebase/database";
-import {
-  getStorage,
-  ref as storageRef,
-  getDownloadURL,
-  uploadBytes,
-  deleteObject,
-} from "firebase/storage";
 
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
@@ -17,6 +10,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { deleteImageFile, fetchImageURL, uploadImageFile } from "../../helper";
 
 export default function VideoItems(props) {
   const navigate = useNavigate();
@@ -35,21 +29,14 @@ export default function VideoItems(props) {
   }
 
   // Asynchronous function to fetch imageURL
-  const setImageURLAsync = async () => {
+  const setImageURLAsync = useCallback(async () => {
     if (props.image.length !== 0) {
-      return props.image; // Return props.image if it's already available
+      return props.image;
     } else if (props.imagePath !== undefined) {
-      const storage = getStorage();
-      try {
-        const url = await getDownloadURL(storageRef(storage, props.imagePath));
-        return url; // Return the fetched URL
-      } catch (error) {
-        console.error("Error fetching image URL:", error);
-        return ""; // Handle error gracefully, return empty string or handle error state
-      }
+      return fetchImageURL(props.imagePath);
     }
-    return ""; // Handle other cases or default return
-  };
+    return "";
+  }, [props.image, props.imagePath]);
 
   // Use useEffect to fetch and set imageURL when component mounts or props change
   useEffect(() => {
@@ -60,9 +47,12 @@ export default function VideoItems(props) {
     fetchImageURL();
   }, [props.image, props.imagePath]);
 
-  const deleteVideo = () => {
+  const deleteVideo = async () => {
+    if (props.imagePath !== null) {
+      await deleteImageFile(props.imagePath);
+    }
     // remove from the database
-    remove(databaseRef(db, `videos/${username}/${props.id}`)).then(() => {
+    await remove(databaseRef(db, `videos/${username}/${props.id}`)).then(() => {
       handleDeleteClose();
       navigate("/home");
     });
@@ -75,42 +65,28 @@ export default function VideoItems(props) {
     const address = addressRef.current.value;
     const description = descriptionRef.current.querySelector("textarea").value;
 
-    let imagePath = null;
-    const storage = getStorage();
-
-    if (imageFile === undefined && image.length === 0) {
-      imagePath = props.imagePath;
-    } else if (props.imagePath !== undefined) {
-      // delete previous image if exist
-      try {
-        const desertRef = storageRef(storage, props.imagePath);
-        await deleteObject(desertRef);
-      } catch (err) {
-        console.log("deleting video error:", err);
-      }
-    }
-
-    // if image url is empty, check for file
-    if (imageFile !== undefined) {
-      setIsLoading(true);
-      // upload new image
-      imagePath = `images/${props.username}/${imageFile.name}`;
-      const storagePath = storageRef(storage, imagePath);
-      try {
-        await uploadBytes(storagePath, imageFile);
-        setIsLoading(false);
-      } catch (err) {
-        console.log("updating video error:", err);
-      }
-    }
-
-    const postData = {
+    let postData = {
       title,
       image,
-      imagePath,
       address,
       description,
     };
+
+    if (imageFile !== undefined) {
+      if (props.imagePath !== undefined) {
+        // there is a new image source, delete previous image if exist
+        await deleteImageFile(props.imagePath);
+      }
+
+      // if image file exist, upload image
+      setIsLoading(true);
+      const imagePath = `images/${props.username}/${imageFile.name}`;
+      await uploadImageFile(imagePath, imageFile);
+      postData = { ...postData, imagePath };
+      setIsLoading(false);
+    } else if (props.imagePath !== undefined) {
+      postData = { ...postData, imagePath: props.imagePath };
+    }
 
     set(databaseRef(db, `videos/${username}/${props.id}`), postData).then(
       () => {

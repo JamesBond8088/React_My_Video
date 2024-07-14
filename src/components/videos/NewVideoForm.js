@@ -43,7 +43,7 @@ export default function NewVideoForm(props) {
     const enteredImageFile = imageFileInputRef.current.files[0];
     const enteredDescription = descriptionInputRef.current.value;
 
-    let path = null;
+    let path = "";
     // if image url is empty, check for file
     if (enteredImageFile !== undefined) {
       setIsLoading(true);
@@ -55,6 +55,7 @@ export default function NewVideoForm(props) {
       setIsLoading(false);
     }
 
+    // check length is not null
     if (enteredImage.length === 0) {
       enteredImage = "";
     }

@@ -31,7 +31,7 @@ export default function MainNavigation(props) {
       className="bg-body-tertiary"
     >
       <Container>
-        <Navbar.Brand>My Videos</Navbar.Brand>
+        <Navbar.Brand>MV</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -60,22 +60,30 @@ export default function MainNavigation(props) {
               Others Video
             </Nav.Link>
           </Nav>
-          <Form className="d-flex" onSubmit={submitHandle}>
+          <Form className="m-auto d-flex" onSubmit={submitHandle}>
             <Form.Control
               type="search"
               placeholder="Video Name/Link"
-              className="me-2"
               aria-label="Search"
               ref={video_url}
             />
             <Button variant="outline-success" type="submit">
-              Search
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
             </Button>
           </Form>
+          <Button variant="outline-primary" onClick={props.handleLogout}>
+            Logout
+          </Button>
         </Navbar.Collapse>
-        <Button variant="outline-primary" onClick={props.handleLogout}>
-          Logout
-        </Button>
       </Container>
     </Navbar>
   );

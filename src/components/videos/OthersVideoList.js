@@ -6,6 +6,7 @@ export default function OthersVideoList(props) {
     <Row xs={2} md={4} className="g-4">
       {props.videos.map((video) => (
         <OthersVideoItems
+          key={video.id}
           id={video.id}
           image={video.image}
           imagePath={video.imagePath}

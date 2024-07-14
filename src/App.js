@@ -77,7 +77,6 @@ export default function App() {
         };
         setCookie("user", cookieValue, { path: "/" });
         setLogin(true);
-        console.log("user logged in");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -125,14 +124,16 @@ export default function App() {
         if (accountPassword !== passwordSHA256) {
           alert("username and password incorrect");
         } else {
-          // set cookie value
-          const cookieValue = {
-            username: username,
-            password: passwordSHA256,
-          };
-          setCookie("user", cookieValue, { path: "/" });
-          setLogin(true);
-          navigate("/home");
+          signInAnonymously(auth).then(() => {
+            // set cookie value
+            const cookieValue = {
+              username: username,
+              password: passwordSHA256,
+            };
+            setCookie("user", cookieValue, { path: "/" });
+            setLogin(true);
+            navigate("/home");
+          });
         }
       }
     });

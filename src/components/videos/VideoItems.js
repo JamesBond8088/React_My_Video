@@ -10,7 +10,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { deleteImageFile, fetchImageURL, uploadImageFile } from "../../helper";
+import { fetchImageURL, uploadImageFile } from "../../helper";
 
 export default function VideoItems(props) {
   const navigate = useNavigate();
@@ -48,9 +48,6 @@ export default function VideoItems(props) {
   }, [props.image, props.imagePath]);
 
   const deleteVideo = async () => {
-    if (props.imagePath !== null) {
-      await deleteImageFile(props.imagePath);
-    }
     // remove from the database
     await remove(databaseRef(db, `videos/${username}/${props.id}`)).then(() => {
       handleDeleteClose();
@@ -70,14 +67,10 @@ export default function VideoItems(props) {
       image,
       address,
       description,
+      imagePath: "",
     };
 
     if (imageFile !== undefined) {
-      if (props.imagePath !== undefined) {
-        // there is a new image source, delete previous image if exist
-        await deleteImageFile(props.imagePath);
-      }
-
       // if image file exist, upload image
       setIsLoading(true);
       const imagePath = `images/${props.username}/${imageFile.name}`;

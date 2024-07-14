@@ -1,7 +1,6 @@
 import { db } from "../../firebase";
 import { ref, push, child, update } from "firebase/database";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import {
@@ -23,7 +22,7 @@ export default function OthersVideoItems(props) {
   const setImageURLAsync = async () => {
     if (props.image.length !== 0) {
       return props.image; // Return props.image if it's already available
-    } else if (props.imagePath !== undefined) {
+    } else if (props.imagePath !== undefined && props.imagePath.length !== 0) {
       const storage = getStorage();
       try {
         const url = await getDownloadURL(storageRef(storage, props.imagePath));
@@ -45,11 +44,17 @@ export default function OthersVideoItems(props) {
     fetchImageURL();
   }, [props.image, props.imagePath]);
 
-  function addVideo() {
+  async function addVideo() {
+    let path = "";
+    // if a image file is uploaded
+    if (props.imagePath !== undefined) {
+      path = props.imagePath;
+    }
+
     const videoData = {
       title: props.title,
       image: props.image,
-      imagePath: props.imagePath,
+      imagePath: path,
       address: props.url,
       description: props.description,
     };

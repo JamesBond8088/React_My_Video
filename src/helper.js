@@ -3,21 +3,26 @@ import {
   ref as storageRef,
   getDownloadURL,
   uploadBytes,
-  deleteObject,
 } from "firebase/storage";
 
 const storage = getStorage();
 
-export const deleteImageFile = async (path) => {
-  try {
-    const desertRef = storageRef(storage, path);
-    await deleteObject(desertRef);
-  } catch (err) {
-    console.log("deleting video error:", err);
-  }
-};
+// export const deleteImageFile = async (path) => {
+//   if (path === "") {
+//     return;
+//   }
+//   try {
+//     const desertRef = storageRef(storage, path);
+//     await deleteObject(desertRef);
+//   } catch (err) {
+//     console.log("deleting video error:", err);
+//   }
+// };
 
 export const uploadImageFile = async (path, file) => {
+  if (path === "") {
+    return;
+  }
   try {
     const storagePath = storageRef(storage, path);
     await uploadBytes(storagePath, file);
@@ -27,6 +32,9 @@ export const uploadImageFile = async (path, file) => {
 };
 
 export const fetchImageURL = async (path) => {
+  if (path === "") {
+    return;
+  }
   try {
     const storage = getStorage();
     const url = await getDownloadURL(storageRef(storage, path));
